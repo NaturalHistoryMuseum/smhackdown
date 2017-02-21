@@ -1,6 +1,13 @@
 <template>
 <div>
-    CHOICE
+  <div class="container">
+    <div class="row">
+      <div v-for="object in objects" class="col-xs-6">
+        <img class="img-responsive" :src="object.image_url" :alt="object.name" />
+      </div>      
+    </div>
+  </div>
+
 </div>
 </template>
 
@@ -9,20 +16,25 @@ export default {
   name: 'Choice',
   data () {
     return {
-      images: []
+      objects: []
     }
   },
-  mounted: function() {
-    console.log(this.$config.api)
-    // var path = require('path')
-    // var apiEndpoint = path.join(this.$config.api.host, this.$config.api.prefix)
-    // this.$http.get(this.apiEndpoint, {
-    //     // Update schemas 
-    //     }).then(response => {
-    //       this.schemas = response.body
-    //     }, response => {
-    //       console.log('Fetch Failed')
-    //     })
+  created () {
+    this.fetchData()
+  },  
+  watch: {
+    // call again the method if the route changes
+    '$route': 'fetchData'
   },
+  methods: {
+    fetchData () {
+      var endpoint = this.$config.api + '/objects'
+      console.log('FETCH')
+      $.get(endpoint, function( data ) {
+        console.log(data)
+        this.objects = data
+      }.bind(this));          
+    }
+  }  
 }
 </script>
