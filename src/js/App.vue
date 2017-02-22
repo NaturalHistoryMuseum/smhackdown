@@ -152,7 +152,7 @@ export default {
       }); 
     },
     fetchTopTen () {
-      var endpoint = 'https://quiet-thicket-98438.herokuapp.com/api/top-ten'
+      var endpoint = this.$config.api + '/top-ten'
       this.$http.get(endpoint)
       .then( function(response) { 
           this.toptenList = response.body
@@ -185,7 +185,7 @@ export default {
       }  
     },
     assetPath(asset){
-      return '/dist/' + asset;
+      return 'dist/' + asset;
     }
   }, 
 }
