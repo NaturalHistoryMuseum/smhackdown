@@ -10,6 +10,7 @@
                   <span class="glyphicon glyphicon-menu-hamburger"></span>
                 </a>
                 <ul class="dropdown-menu">
+                  <li><a @click="setStep(0, $event)">Home</a></li>
                   <li><a @click="setStep(1, $event)">Hot or Not</a></li>
                   <li><a @click="setStep(2, $event)">Top 10</a></li>
                   <li><a @click="setStep(3, $event)">Top institution</a></li>
