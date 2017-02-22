@@ -48,6 +48,12 @@
               <h1>You <span class="glyphicon glyphicon-heart"></span> {{ likedObject.name }}</h1>
               <img class="img-small" :src="likedObject.image_url" :alt="likedObject.name" />
               <p><a target="_blank" :href="likedObject.object_url">View {{ likedObject.institution }} object</a></p>
+              <button type="button" class="btn btn-default" @click="setStep(2, $event)">
+              View top ten
+              </button>
+              <button type="button" class="btn btn-default" @click="chooseAgain()">
+              Choose again
+              </button>           
             </div>   
             <div v-else>
               <div v-for="object in objectsList" class="col-xs-6 no-margin clickable">
@@ -144,6 +150,11 @@ export default {
       .catch( function(error) { 
           console.error(error); 
       });          
+    },
+    chooseAgain(){
+      this.objects = []
+      this.fetchOptions();
+      this.likedObject = {}
     },
     like(object){
       this.likedObject = object
