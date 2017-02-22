@@ -63,7 +63,7 @@
             </table>
           </div>             
           <div v-else>
-          
+
             <table class="table table-striped table-hover institution">
               <tr v-for="institution in institutionsList" class="col-xs-12">
                 <td><img class="responsive" :src="assetPath(institution.logo)" :alt="institution.name" :title="institution.name"></td>
@@ -152,7 +152,7 @@ export default {
       }); 
     },
     fetchTopTen () {
-      var endpoint = this.$config.api + '/top-ten'
+      var endpoint = 'https://quiet-thicket-98438.herokuapp.com/api/top-ten'
       this.$http.get(endpoint)
       .then( function(response) { 
           this.toptenList = response.body
