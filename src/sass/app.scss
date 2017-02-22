@@ -1,6 +1,47 @@
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import "~bootstrap-sass/assets/stylesheets/_bootstrap";
 
+a{
+  cursor: pointer;
+}
+
+.dropdown{
+  margin: 18px 20px 0 10px;
+  a{
+    color: #fff;
+    .glyphicon{
+      font-size: 20px;
+    }
+  }
+}
+
+.no-margin{
+  margin: 0;
+  padding: 0;
+  img{
+    width: 100%;
+  }
+}
+
+nav.navbar{
+  border-radius: 0;
+  margin: 0;
+  h1{
+    margin: 10px 0;
+    padding: 0;
+    color: #fff;
+    display: block;
+    span{
+      color: grey;
+      padding: 0 5px;
+    }
+  }  
+}
+
+img{
+  min-height: 100%;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
