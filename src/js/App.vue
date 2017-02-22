@@ -64,8 +64,8 @@
           <div v-else-if="isCurrentStep(2)" class="topten">
             <table class="table table-striped table-hover">
             <tr v-for="(object, idx) in toptenList" class="topten">
-              <td class="col-md-2">{{ idx + 1 }}</td>
-              <td class="col-md-4"><img :src="object.image_url" :alt="object.name" /></td>
+              <td class="col-md-2 text-right"><span class="btn btn-success">{{ idx + 1 }}</span></td>
+              <td class="col-md-4 text-center"><img :src="object.image_url" :alt="object.name" /></td>
               <td class="col-md-6">
                 <h3>{{ object.name }}</h3>
                 <h4><span class="glyphicon glyphicon-heart"></span> {{ object.likes_count }}</h4>
