@@ -42,6 +42,30 @@ img{
   min-height: 100%;
 }
 
+.topten{
+  img{
+    max-height: 200px;
+    max-height: 200px!important;
+    min-height: auto!important;
+  }
+}
+
+.hidden{
+  display: none;
+}
+
+.institution{
+  td{
+    width: 50%;
+  }
+  img{
+    max-height: 200px;
+    max-height: 200px!important;
+    min-height: auto!important;    
+  }
+}
+
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

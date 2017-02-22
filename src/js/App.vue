@@ -17,9 +17,8 @@
               </div>              
             </div>
             <div class="col-xs-10">
-              <h1 v-html="title" ></h1>
-            </div>            
-            
+              <h1 v-html="title"></h1>
+            </div>                      
           </div>            
         </div>      
       </div>
@@ -28,12 +27,12 @@
     <div class="container-fluid">
         <div class="row">
 
-
         </div>          
     </div>
     <div class="container-fluid">
         <div class="row">
           <div v-if="isCurrentStep(0)">
+
             WELCOME!!
 
             <button type="button" class="btn btn-default" @click="setStep(2, $event)">
@@ -46,19 +45,42 @@
 
           </div>
           <div v-else-if="isCurrentStep(1)">
-            <div v-for="object in objects" class="col-xs-6 no-margin">
+            <div v-for="object in objectsList" class="col-xs-6 no-margin">
               <img @click="like(object.id)" class="img-responsive" :src="object.image_url" :alt="object.name" />
             </div>   
           </div>    
-          <div v-else-if="isCurrentStep(2)">
-            TOP 10
+          <div v-else-if="isCurrentStep(2)" class="topten">
+            <table class="table table-striped table-hover">
+            <tr v-for="(object, idx) in toptenList" class="topten">
+              <td class="col-md-2">{{ idx + 1 }}</td>
+              <td class="col-md-4"><img :src="object.image_url" :alt="object.name" /></td>
+              <td class="col-md-6">
+                <p>{{ object.name }}</p>
+                <p>Likes: {{ object.likes_count }}</p>
+                <p><a target="_blank" :href="object.object_url">View {{ object.institution }} object</a></p>
+              </td>
+            </tr>
+            </table>
           </div>             
           <div v-else>
-            TOP INST
+          
+            <table class="table table-striped table-hover institution">
+              <tr v-for="institution in institutionsList" class="col-xs-12">
+                <td><img class="responsive" :src="assetPath(institution.logo)" :alt="institution.name" :title="institution.name"></td>
+                <td>Likes: {{ institution.likes_count }}</td>
+              </tr>              
+            </table>
+
+            <img class="hidden" src="../assets/British_Museum_Logo.jpg">
+            <img class="hidden" src="../assets/ScienceMuseum.png">
+            <img class="hidden" src="../assets/new-nhm-logo.gif">
+            <img class="hidden" src="../assets/vanda.png">            
           </div>         
         </div>          
     </div>    
   </div>     
+
+
 
 
 </template>
@@ -69,7 +91,9 @@ export default {
   data () {
     return {
       currentStep: 0,
-      objects: []
+      objectsList: [],
+      toptenList: [],
+      institutionsList: []
     }
   },
   computed: {
@@ -108,25 +132,45 @@ export default {
       var endpoint = this.$config.api + '/objects'
       this.$http.get(endpoint)
       .then( function(response) { 
-          this.objects = response.body
+          this.objectsList = response.body
       }) 
       .catch( function(error) { 
           console.error(error); 
       });          
     },
-    like(option){
-      console.log(option)
+    like(object_id){
+      var endpoint = this.$config.api + '/objects' 
+      var data = {
+        object_id: object_id
+      }
+      this.$http.post(endpoint, data)
+      .then( function(response) { 
+          console.log("LIKED")
+      }) 
+      .catch( function(error) { 
+          console.error(error); 
+      }); 
     },
     fetchTopTen () {
-      // var endpoint = this.$config.api + '/top-ten'
-      // this.$http.get(endpoint)
-      // .then( function(response) { 
-      //     this.toptenList = response.body
-      // }) 
-      // .catch( function(error) { 
-      //     console.error(error); 
-      // });          
+      var endpoint = this.$config.api + '/top-ten'
+      this.$http.get(endpoint)
+      .then( function(response) { 
+          this.toptenList = response.body
+      }) 
+      .catch( function(error) { 
+          console.error(error); 
+      });          
     },
+    fetchInstitutions () {
+      var endpoint = this.$config.api + '/institutions'
+      this.$http.get(endpoint)
+      .then( function(response) { 
+          this.institutionsList = response.body
+      }) 
+      .catch( function(error) { 
+          console.error(error); 
+      });          
+    },    
     onStepChange(){
       switch(this.currentStep) {
         case 1:
@@ -135,8 +179,14 @@ export default {
         case 2:
           this.fetchTopTen()
         break;
+        case 3:
+          this.fetchInstitutions()
+        break;        
       }  
-    }      
+    },
+    assetPath(asset){
+      return '/dist/' + asset;
+    }
   }, 
 }
 </script>
