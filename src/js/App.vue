@@ -195,6 +195,7 @@ export default {
       });          
     },    
     onStepChange(){
+      this.likedObject = {}
       switch(this.currentStep) {
         case 1:
           this.fetchOptions()
