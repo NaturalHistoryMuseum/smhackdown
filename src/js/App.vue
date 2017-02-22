@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="navbar-header">
           <div class="row">
-            <div class="col-md-2">
+            <div class="col-xs-2">
              <div class="dropdown">
                 <a class="dropdown-toggle" type="button" data-toggle="dropdown">
                   <span class="glyphicon glyphicon-menu-hamburger"></span>
@@ -16,8 +16,8 @@
                 </ul>
               </div>              
             </div>
-            <div class="col-md-10">
-              <h1>HOT<span>OR</span>NOT</h1>
+            <div class="col-xs-10">
+              <h1 v-html="title" ></h1>
             </div>            
             
           </div>            
@@ -36,8 +36,12 @@
           <div v-if="isCurrentStep(0)">
             WELCOME!!
 
+            <button type="button" class="btn btn-default" @click="setStep(2, $event)">
+              View top ten
+            </button>
+
             <button type="button" class="btn btn-default" @click="next()">
-              <i class="fa fa-arrow-right" aria-hidden="true"></i>Next
+              Get started
             </button>
 
           </div>
@@ -68,6 +72,24 @@ export default {
       objects: []
     }
   },
+  computed: {
+    title: function () { 
+      switch(this.currentStep) {
+        case 1:
+          return 'HOT<span>OR</span>NOT'
+        break;
+        case 2:
+          return 'TOP<span>TEN</span>'
+        break;
+        case 3:
+          return 'TOP<span>INSTITUTION</span>'
+        break;        
+        default:
+          return 'SMHACK<span>DOWN</span>'
+        break;
+      }  
+    },       
+  },   
   methods: {
     isCurrentStep (step) {
       return step == this.currentStep;          
@@ -82,6 +104,7 @@ export default {
       this.onStepChange();
     },    
     fetchOptions () {
+      this.objects = []
       var endpoint = this.$config.api + '/objects'
       this.$http.get(endpoint)
       .then( function(response) { 
@@ -95,14 +118,14 @@ export default {
       console.log(option)
     },
     fetchTopTen () {
-      var endpoint = this.$config.api + '/top-ten'
-      this.$http.get(endpoint)
-      .then( function(response) { 
-          this.toptenList = response.body
-      }) 
-      .catch( function(error) { 
-          console.error(error); 
-      });          
+      // var endpoint = this.$config.api + '/top-ten'
+      // this.$http.get(endpoint)
+      // .then( function(response) { 
+      //     this.toptenList = response.body
+      // }) 
+      // .catch( function(error) { 
+      //     console.error(error); 
+      // });          
     },
     onStepChange(){
       switch(this.currentStep) {
