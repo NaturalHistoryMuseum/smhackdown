@@ -65,6 +65,30 @@ img{
   }
 }
 
+.grey-bg{
+  background: #262626;
+  color: #fff;
+  border: 5px solid #fff;
+
+  h1{
+    margin: 60px 0;
+  }
+}
+
+.intro{
+  margin: 50px 0;
+}
+
+.clickable{
+  cursor: pointer;
+}
+
+.img-small{
+    max-height: 200px;
+    max-height: 200px!important;
+    min-height: auto!important;   
+}
+
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

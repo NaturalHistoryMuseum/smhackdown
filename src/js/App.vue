@@ -26,28 +26,34 @@
 
     <div class="container-fluid">
         <div class="row">
-
-        </div>          
-    </div>
-    <div class="container-fluid">
-        <div class="row">
           <div v-if="isCurrentStep(0)">
+            <div class="text-center intro">
+              <h1>What object is HOT? What object is NOT?</h1>
+              <h2>Four world class Museums compete for your love.</h2>
+              <h2>Simply tap the picture you <span class="glyphicon glyphicon-heart"></span></h2>              
+            </div>
 
-            WELCOME!!
-
-            <button type="button" class="btn btn-default" @click="setStep(2, $event)">
-              View top ten
-            </button>
-
-            <button type="button" class="btn btn-default" @click="next()">
-              Get started
-            </button>
+            <div class="row">
+              <div class="col-md-6 text-center grey-bg clickable" @click="setStep(2, $event)">
+                <h1>View top ten</h1>            
+              </div>
+              <div class="col-md-6 text-center grey-bg clickable" @click="next()">
+                <h1>Get started</h1>
+              </div>
+            </div>
 
           </div>
           <div v-else-if="isCurrentStep(1)">
-            <div v-for="object in objectsList" class="col-xs-6 no-margin">
-              <img @click="like(object.id)" class="img-responsive" :src="object.image_url" :alt="object.name" />
+            <div v-if="Object.keys(likedObject).length" class="text-center">
+              <h1>You <span class="glyphicon glyphicon-heart"></span> {{ likedObject.name }}</h1>
+              <img class="img-small" :src="likedObject.image_url" :alt="likedObject.name" />
+              <p><a target="_blank" :href="likedObject.object_url">View {{ likedObject.institution }} object</a></p>
             </div>   
+            <div v-else>
+              <div v-for="object in objectsList" class="col-xs-6 no-margin clickable">
+                <img @click="like(object)" class="img-responsive" :src="object.image_url" :alt="object.name" />
+              </div>   
+            </div>              
           </div>    
           <div v-else-if="isCurrentStep(2)" class="topten">
             <table class="table table-striped table-hover">
@@ -93,7 +99,8 @@ export default {
       currentStep: 0,
       objectsList: [],
       toptenList: [],
-      institutionsList: []
+      institutionsList: [],
+      likedObject: {}
     }
   },
   computed: {
@@ -138,10 +145,11 @@ export default {
           console.error(error); 
       });          
     },
-    like(object_id){
+    like(object){
+      this.likedObject = object
       var endpoint = this.$config.api + '/objects' 
       var data = {
-        object_id: object_id
+        object_id: object.id
       }
       this.$http.post(endpoint, data)
       .then( function(response) { 
