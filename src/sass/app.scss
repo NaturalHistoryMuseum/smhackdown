@@ -55,14 +55,36 @@ img{
 }
 
 .institution{
+
+  tr{
+    margin: 20px 0;
+  }
+
   td{
     width: 50%;
+    padding: 20px 10px;
+    
+    &.institution-logo{
+      text-align: right;  
+      img{
+        margin-right: 100px;
+      }
+    }
+    &.institution-likes{
+      span{
+        display: block;
+      }
+      text-align: left;  
+      font-size: 30px;
+    }    
+
   }
   img{
-    max-height: 200px;
-    max-height: 200px!important;
-    min-height: auto!important;    
+    max-height: 100px;
+    max-height: 100px!important;
+    min-height: auto!important;  
   }
+
 }
 
 .grey-bg{

@@ -67,8 +67,8 @@
               <td class="col-md-2">{{ idx + 1 }}</td>
               <td class="col-md-4"><img :src="object.image_url" :alt="object.name" /></td>
               <td class="col-md-6">
-                <p>{{ object.name }}</p>
-                <p>Likes: {{ object.likes_count }}</p>
+                <h3>{{ object.name }}</h3>
+                <h4><span class="glyphicon glyphicon-heart"></span> {{ object.likes_count }}</h4>
                 <p><a target="_blank" :href="object.object_url">View {{ object.institution }} object</a></p>
               </td>
             </tr>
@@ -76,10 +76,14 @@
           </div>             
           <div v-else>
 
-            <table class="table table-striped table-hover institution">
-              <tr v-for="institution in institutionsList" class="col-xs-12">
-                <td><img class="responsive" :src="assetPath(institution.logo)" :alt="institution.name" :title="institution.name"></td>
-                <td>Likes: {{ institution.likes_count }}</td>
+            <table class="table table-striped table-hover institution" cellpadding="10">
+              <tr v-for="institution in institutionsList">
+                <td class="institution-logo">
+                  <img :src="assetPath(institution.logo)" :alt="institution.name" :title="institution.name">
+                </td>
+                <td class="institution-likes">
+                  <span class="glyphicon glyphicon-heart"></span> {{ institution.likes_count }}
+                </td>
               </tr>              
             </table>
 
